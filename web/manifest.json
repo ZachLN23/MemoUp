@@ -1,6 +1,6 @@
 {
-  "name": "My Final Project",
-  "short_name": "Final Project",
+  "name": "MemoUp",
+  "short_name": "MemoUp",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#FFFFFF",
