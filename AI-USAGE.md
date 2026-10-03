@@ -30,6 +30,13 @@ At least six entries. One per real use. Every entry needs a commit link.
 - **What I kept, what I changed, and why:The first fix attempt (constraining to >=8.0.0 <12.0.0) still left the door open to the exact broken release — I didn't catch that myself, Claude found it after I reported .platform was still showing undefined. Kept the corrected >=10.3.10 <12.0.0 constraint once that was explained.**
 - **Commit: https://github.com/ZachLN23/MemoUp/commit/9c075ff0c27ffd6288c69ac69f1dad93b95fdd99
 
+### 2026-09-26 - file_picker version bug
+
+- **Tool:Claude AI**
+- **What I asked for:help to develop the "upload custom audio" feature from the design system**
+- **What it gave back:sound_settings_screen.dart (snooze-time picker, a sound checklist, Upload New Audio wired to the real device file picker via the file_picker package) and the matching AppData methods.**
+- **What I kept, what I changed, and why:Kept the code for the upload audio, changed the look of the given page**
+- **Commit: https://github.com/ZachLN23/MemoUp/commit/9c075ff0c27ffd6288c69ac69f1dad93b95fdd99
 
 ## 2. Where the AI got it wrong
 
