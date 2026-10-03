@@ -36,3 +36,14 @@ flutter:
   # Put images, fonts and sounds in assets/ and list them here, for example:
   # assets:
   #   - assets/images/
+
+  deploy:
+  needs: build
+  if: needs.build.outputs.ready == 'true'
+  runs-on: ubuntu-latest
+  environment:
+    name: github-pages
+    url: ${{ steps.deployment.outputs.page_url }}
+  steps:
+    - id: deployment
+      uses: actions/deploy-pages@v5
