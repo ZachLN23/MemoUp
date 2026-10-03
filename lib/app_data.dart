@@ -11,34 +11,9 @@ import 'task.dart';
 class AppData {
   AppData()
       : tasks = [
-          Task(
-            title: 'Submit Assignment',
-            date: DateTime.now(),
-            time: const TimeOfDay(hour: 8, minute: 0),
-          ),
-          Task(
-            title: 'Team Meeting',
-            date: DateTime.now(),
-            time: const TimeOfDay(hour: 14, minute: 0),
-          ),
-          Task(
-            title: 'Doctor Appointment',
-            date: DateTime.now().add(const Duration(days: 3)),
-          ),
-          Task(
-            title: 'Pay Electricity Bill',
-            date: DateTime.now().add(const Duration(days: 5)),
-          ),
+          
         ],
-        completed = [
-          CompletedTask(
-            title: 'Buy Groceries',
-            date: DateTime.now().subtract(const Duration(days: 7)),
-          ),
-          CompletedTask(
-            title: 'Team Meeting',
-            date: DateTime.now().subtract(const Duration(days: 9)),
-          ),
+        completed = [        
         ];
 
   final List<Task> tasks;
