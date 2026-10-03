@@ -10,7 +10,7 @@ At least six entries. One per real use. Every entry needs a commit link.
 
 - **Tool:Claude AI**
 - **What I asked for: Assistance for creating the home screen**
-- **What it gave back: theme.dart, constants/spacing.dart, home_screen.dart, and three widgets (task_card.dart, primary_button.dart, bottom_nav_bar.dart), wired into main.dart.**
+- **What it gave back: constants/spacing.dart, home_screen.dart, and three widgets (task_card.dart, primary_button.dart, bottom_nav_bar.dart), wired into main.dart.**
 - **What I kept, what I changed, and why:i kept the overall looks of the home screen, the today's reminder and upcoming reminders were empty so i put temporary stakholders to show what it would look like finised.**
 - **Commit: https://github.com/ZachLN23/MemoUp/commit/ab59cd74da5280a534e8aae8aa6cb1439a975c28
 
@@ -74,12 +74,12 @@ it in your own words.
 
 ### Written by me
 
-- **File:**
-- **Commit:**
-- **What it does and why it is built this way:**
+- **File: lib/theme.dart**
+- **Commit: //github.com/ZachLN23/MemoUp/commit/9c075ff0c27ffd6288c69ac69f1dad93b95fdd99**
+- **What it does and why it is built this way: This file contains the colors and theme settings used throughout the app. I customized the theme based on my personal preferences to make the app look clean, consistent, and visually appealing**
 
 ### The AI-written part I understand best
 
-- **File:**
-- **Commit:**
-- **What it does and why we kept it:**
+- **File:lib/home_screen.dart**
+- **Commit:https://github.com/ZachLN23/MemoUp/commit/ab59cd74da5280a534e8aae8aa6cb1439a975c28**
+- **What it does and why we kept it:This file contains the main home screen of MemoUp. It displays the main features and information that users see when they open the app. Kept it because it serves as the starting point of the app and provides access to the other features. **
