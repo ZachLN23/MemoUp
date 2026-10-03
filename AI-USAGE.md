@@ -12,7 +12,7 @@ At least six entries. One per real use. Every entry needs a commit link.
 - **What I asked for: Assistance for creating the home screen**
 - **What it gave back: theme.dart, constants/spacing.dart, home_screen.dart, and three widgets (task_card.dart, primary_button.dart, bottom_nav_bar.dart), wired into main.dart.**
 - **What I kept, what I changed, and why:i kept the overall looks of the home screen, the today's reminder and upcoming reminders were empty so i put temporary stakholders to show what it would look like finised.**
-- **Commit: https://github.com/ZachLN23/MemoUp/commit/a8969cc
+- **Commit: https://github.com/ZachLN23/MemoUp/commit/ab59cd74da5280a534e8aae8aa6cb1439a975c28
 ** 
 
 ## 2. Where the AI got it wrong
