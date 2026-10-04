@@ -10,7 +10,7 @@ At least six entries. One per real use. Every entry needs a commit link.
 
 - **Tool:Claude AI**
 - **What I asked for: Assistance for creating the home screen**
-- **What it gave back: theme.dart, constants/spacing.dart, home_screen.dart, and three widgets (task_card.dart, primary_button.dart, bottom_nav_bar.dart), wired into main.dart.**
+- **What it gave back: constants/spacing.dart, home_screen.dart, and three widgets (task_card.dart, primary_button.dart, bottom_nav_bar.dart), wired into main.dart.**
 - **What I kept, what I changed, and why:i kept the overall looks of the home screen, the today's reminder and upcoming reminders were empty so i put temporary stakholders to show what it would look like finised.**
 - **Commit: https://github.com/ZachLN23/MemoUp/commit/ab59cd74da5280a534e8aae8aa6cb1439a975c28
 
@@ -30,6 +30,13 @@ At least six entries. One per real use. Every entry needs a commit link.
 - **What I kept, what I changed, and why:The first fix attempt (constraining to >=8.0.0 <12.0.0) still left the door open to the exact broken release — I didn't catch that myself, Claude found it after I reported .platform was still showing undefined. Kept the corrected >=10.3.10 <12.0.0 constraint once that was explained.**
 - **Commit: https://github.com/ZachLN23/MemoUp/commit/9c075ff0c27ffd6288c69ac69f1dad93b95fdd99
 
+### 2026-09-26 - file_picker version bug
+
+- **Tool:Claude AI**
+- **What I asked for:help to develop the "upload custom audio" feature from the design system**
+- **What it gave back:sound_settings_screen.dart (snooze-time picker, a sound checklist, Upload New Audio wired to the real device file picker via the file_picker package) and the matching AppData methods.**
+- **What I kept, what I changed, and why:Kept the code for the upload audio, changed the look of the given page**
+- **Commit: https://github.com/ZachLN23/MemoUp/commit/9c075ff0c27ffd6288c69ac69f1dad93b95fdd99
 
 ## 2. Where the AI got it wrong
 
@@ -67,12 +74,12 @@ it in your own words.
 
 ### Written by me
 
-- **File:**
-- **Commit:**
-- **What it does and why it is built this way:**
+- **File: lib/theme.dart**
+- **Commit: //github.com/ZachLN23/MemoUp/commit/9c075ff0c27ffd6288c69ac69f1dad93b95fdd99**
+- **What it does and why it is built this way: This file contains the colors and theme settings used throughout the app. I customized the theme based on my personal preferences to make the app look clean, consistent, and visually appealing**
 
 ### The AI-written part I understand best
 
-- **File:**
-- **Commit:**
-- **What it does and why we kept it:**
+- **File:lib/home_screen.dart**
+- **Commit:https://github.com/ZachLN23/MemoUp/commit/ab59cd74da5280a534e8aae8aa6cb1439a975c28**
+- **What it does and why we kept it:This file contains the main home screen of MemoUp. It displays the main features and information that users see when they open the app. Kept it because it serves as the starting point of the app and provides access to the other features. **
