@@ -46,6 +46,14 @@ At least six entries. One per real use. Every entry needs a commit link.
 - **What I kept, what I changed, and why:kept the basic notification pop-up structure because it matched what I wanted for MemoUp. I changed some of the styling and text to fit the design of my app and make the notification look more consistent with the rest of the interface.**
 - **Commit: https://github.com/ZachLN23/MemoUp/commit/0a002e67af7f0b2f6df2f3e4bd0523102e7af2c3
 
+### 2026-10-04 - Vibrate Feature
+
+- **Tool:Claude AI**
+- **What I asked for:To help me add a vibration feature to the app when a notification appears.**
+- **What it gave back:It provided code and guidance on how to trigger the device vibration when a notification is shown.**
+- **What I kept, what I changed, and why:I kept the basic vibration functionality because it makes the notification more noticeable. I adjusted it to work with my notification feature and kept the vibration simple so it would not be too distracting for the user.**
+- **Commit: https://github.com/ZachLN23/MemoUp/commit/0a002e67af7f0b2f6df2f3e4bd0523102e7af2c3
+  
 ## 2. Where the AI got it wrong
 
 Three cases. Be specific. If you write that the AI was never wrong, this section
