@@ -38,12 +38,12 @@ At least six entries. One per real use. Every entry needs a commit link.
 - **What I kept, what I changed, and why:Kept the code for the upload audio, changed the look of the given page**
 - **Commit: https://github.com/ZachLN23/MemoUp/commit/9c075ff0c27ffd6288c69ac69f1dad93b95fdd99
 
-### 2026-10-04 - file_picker version bug
+### 2026-10-04 - Notification feature
 
 - **Tool:Claude AI**
-- **What I asked for:to help me with the notification pop up feature**
-- **What it gave back:**
-- **What I kept, what I changed, and why:Kept the code for the upload audio, changed the look of the given page**
+- **What I asked for:To help me create a notification pop-up feature for the app.**
+- **What it gave back: It provided code and guidance on how to display a notification pop-up when an action or reminder occurs.**
+- **What I kept, what I changed, and why:kept the basic notification pop-up structure because it matched what I wanted for MemoUp. I changed some of the styling and text to fit the design of my app and make the notification look more consistent with the rest of the interface.**
 - **Commit: https://github.com/ZachLN23/MemoUp/commit/0a002e67af7f0b2f6df2f3e4bd0523102e7af2c3
 
 ## 2. Where the AI got it wrong
