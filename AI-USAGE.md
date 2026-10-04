@@ -38,6 +38,14 @@ At least six entries. One per real use. Every entry needs a commit link.
 - **What I kept, what I changed, and why:Kept the code for the upload audio, changed the look of the given page**
 - **Commit: https://github.com/ZachLN23/MemoUp/commit/9c075ff0c27ffd6288c69ac69f1dad93b95fdd99
 
+### 2026-10-04 - file_picker version bug
+
+- **Tool:Claude AI**
+- **What I asked for:to help me with the notification pop up feature**
+- **What it gave back:**
+- **What I kept, what I changed, and why:Kept the code for the upload audio, changed the look of the given page**
+- **Commit: https://github.com/ZachLN23/MemoUp/commit/0a002e67af7f0b2f6df2f3e4bd0523102e7af2c3
+
 ## 2. Where the AI got it wrong
 
 Three cases. Be specific. If you write that the AI was never wrong, this section
@@ -51,19 +59,21 @@ scores zero.
 - **Commit: https://github.com/ZachLN23/MemoUp/commit/9c075ff0c27ffd6288c69ac69f1dad93b95fdd99**
 
 
-### Case 2 - short title
+### Case 2 - "notification feature" wasn't actually a notification
 
-- **What it gave me:**
-- **What was wrong with it:**
-- **What I did instead:**
-- **Commit:** https://github.com/YOUR-USERNAME/YOUR-REPO/commit/SHA
+- **What it gave me: an Alarm Popup that fires from a 30-second in-app timer checking task due-times while Home is open.**
+- **What was wrong with it: it only works if the app happens to be open in the foreground at that moment. If the app is closed or backgrounded, nothing fires at all.**
+- **What I did instead: real notifications need flutter_local_notifications plus Android/iOS permission setup, which isn't done.**
+- **Commit:https://github.com/ZachLN23/MemoUp/commit/0a002e67af7f0b2f6df2f3e4bd0523102e7af2c3**
 
-### Case 3 - short title
+### Case 3 - 30 seconds late, by design, without flagging the cost
 
-- **What it gave me:**
-- **What was wrong with it:**
-- **What I did instead:**
-- **Commit:** https://github.com/YOUR-USERNAME/YOUR-REPO/commit/SHA
+- **What it gave me: Runs on a Timer.periodic every 30 seconds.**
+- **What was wrong with it: Runs on a Timer.periodic every 30 seconds**
+- **What I did instead: Shorten the interval**
+- **Commit:https://github.com/ZachLN23/MemoUp/commit/0a002e67af7f0b2f6df2f3e4bd0523102e7af2c3 **
+
+  
 ## 3. Who wrote what
 
 At least a fifth of this project is code you wrote yourself. Name it, and explain
