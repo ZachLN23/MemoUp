@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart' show TimeOfDay;
-
 import 'task.dart';
 
 /// Tiny in-memory store shared across screens via constructor
@@ -10,14 +8,17 @@ import 'task.dart';
 /// directly.
 class AppData {
   AppData()
-      : tasks = [
-          
-        ],
-        completed = [        
-        ];
+      : tasks = [],
+        completed = [];
 
   final List<Task> tasks;
   final List<CompletedTask> completed;
+
+  /// Notification Settings. Gates whether Home's alarm check (see
+  /// home_screen.dart) shows the Alarm Popup at all, and whether it
+  /// vibrates when it does.
+  bool notificationsEnabled = true;
+  bool vibrateOnReminder = true;
 
   /// Built-in + uploaded sound names shown as checklist options on
   /// Sound Settings. [selectedSound] is which one is currently active.

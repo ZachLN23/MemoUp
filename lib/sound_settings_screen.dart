@@ -1,9 +1,9 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-
 import 'app_data.dart';
 import 'completed_screen.dart';
 import 'constants/spacing.dart';
+import 'notification_settings_screen.dart';
 import 'theme.dart';
 import 'widgets/back_button.dart';
 import 'widgets/bottom_nav_bar.dart';
@@ -11,8 +11,7 @@ import 'widgets/checklist_item.dart';
 import 'widgets/dropdown_field.dart';
 import 'widgets/primary_button.dart';
 
-/// Default Snooze Time, the Default Sounds checklist, and the
-/// "Upload New Audio" button that adds a new option to it.
+
 class SoundSettingsScreen extends StatefulWidget {
   const SoundSettingsScreen({super.key, required this.appData});
 
@@ -66,7 +65,7 @@ class _SoundSettingsScreenState extends State<SoundSettingsScreen> {
 
   Future<void> _uploadAudio() async {
     final result = await FilePicker.pickFiles(type: FileType.audio);
-    if (result == null || result.files.isEmpty) return; // user cancelled
+    if (result == null || result.files.isEmpty) return; 
 
     final fileName = result.files.first.name;
     setState(() => widget.appData.addCustomSound(fileName));
@@ -87,7 +86,7 @@ class _SoundSettingsScreenState extends State<SoundSettingsScreen> {
         ),
       );
     }
-    // index == 2 (Settings) — already here.
+    
   }
 
   @override
@@ -107,7 +106,19 @@ class _SoundSettingsScreenState extends State<SoundSettingsScreen> {
                 children: [
                   AppBackButton(onPressed: () => Navigator.of(context).pop()),
                   const SizedBox(width: kSpacingStandard),
-                  Text('Sound Settings', style: textTheme.headlineSmall),
+                  Expanded(
+                    child: Text('Sound Settings', style: textTheme.headlineSmall),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.notifications_outlined, color: kOnSurface),
+                    tooltip: 'Notification Settings',
+                    onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) =>
+                            NotificationSettingsScreen(appData: appData),
+                      ),
+                    ),
+                  ),
                 ],
               ),
               const SizedBox(height: kSpacingStandard),
