@@ -1,4 +1,4 @@
-# AI usage or MemoUp
+# AI usage of MemoUp
 
 I used Claude as an ai assistant in making this app. used it for code generations, development guides.
 
