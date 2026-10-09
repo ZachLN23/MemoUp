@@ -1,4 +1,4 @@
-# AI usage or MemoUp
+# AI usage of MemoUp
 
 I used Claude as an ai assistant in making this app. used it for code generations, development guides.
 
@@ -38,6 +38,22 @@ At least six entries. One per real use. Every entry needs a commit link.
 - **What I kept, what I changed, and why:Kept the code for the upload audio, changed the look of the given page**
 - **Commit: https://github.com/ZachLN23/MemoUp/commit/9c075ff0c27ffd6288c69ac69f1dad93b95fdd99
 
+### 2026-10-04 - Notification feature
+
+- **Tool:Claude AI**
+- **What I asked for:To help me create a notification pop-up feature for the app.**
+- **What it gave back: It provided code and guidance on how to display a notification pop-up when an action or reminder occurs.**
+- **What I kept, what I changed, and why:kept the basic notification pop-up structure because it matched what I wanted for MemoUp. I changed some of the styling and text to fit the design of my app and make the notification look more consistent with the rest of the interface.**
+- **Commit: https://github.com/ZachLN23/MemoUp/commit/0a002e67af7f0b2f6df2f3e4bd0523102e7af2c3
+
+### 2026-10-04 - Vibrate Feature
+
+- **Tool:Claude AI**
+- **What I asked for:To help me add a vibration feature to the app when a notification appears.**
+- **What it gave back:It provided code and guidance on how to trigger the device vibration when a notification is shown.**
+- **What I kept, what I changed, and why:I kept the basic vibration functionality because it makes the notification more noticeable. I adjusted it to work with my notification feature and kept the vibration simple so it would not be too distracting for the user.**
+- **Commit: https://github.com/ZachLN23/MemoUp/commit/0a002e67af7f0b2f6df2f3e4bd0523102e7af2c3
+  
 ## 2. Where the AI got it wrong
 
 Three cases. Be specific. If you write that the AI was never wrong, this section
@@ -51,19 +67,21 @@ scores zero.
 - **Commit: https://github.com/ZachLN23/MemoUp/commit/9c075ff0c27ffd6288c69ac69f1dad93b95fdd99**
 
 
-### Case 2 - short title
+### Case 2 - "notification feature" wasn't actually a notification
 
-- **What it gave me:**
-- **What was wrong with it:**
-- **What I did instead:**
-- **Commit:** https://github.com/YOUR-USERNAME/YOUR-REPO/commit/SHA
+- **What it gave me: an Alarm Popup that fires from a 30-second in-app timer checking task due-times while Home is open.**
+- **What was wrong with it: it only works if the app happens to be open in the foreground at that moment. If the app is closed or backgrounded, nothing fires at all.**
+- **What I did instead: real notifications need flutter_local_notifications plus Android/iOS permission setup, which isn't done.**
+- **Commit:https://github.com/ZachLN23/MemoUp/commit/0a002e67af7f0b2f6df2f3e4bd0523102e7af2c3**
 
-### Case 3 - short title
+### Case 3 - 30 seconds late, by design, without flagging the cost
 
-- **What it gave me:**
-- **What was wrong with it:**
-- **What I did instead:**
-- **Commit:** https://github.com/YOUR-USERNAME/YOUR-REPO/commit/SHA
+- **What it gave me: Runs on a Timer.periodic every 30 seconds.**
+- **What was wrong with it: Runs on a Timer.periodic every 30 seconds**
+- **What I did instead: Shorten the interval**
+- **Commit:https://github.com/ZachLN23/MemoUp/commit/0a002e67af7f0b2f6df2f3e4bd0523102e7af2c3 **
+
+  
 ## 3. Who wrote what
 
 At least a fifth of this project is code you wrote yourself. Name it, and explain
