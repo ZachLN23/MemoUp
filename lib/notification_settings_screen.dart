@@ -30,8 +30,10 @@ class _NotificationSettingsScreenState
   }
 
   void _save() {
-    widget.appData.notificationsEnabled = _enabled;
-    widget.appData.vibrateOnReminder = _vibrate;
+    widget.appData.updateNotificationSettings(
+      enabled: _enabled,
+      vibrate: _vibrate,
+    );
     Navigator.of(context).pop();
   }
 
@@ -71,8 +73,7 @@ class _NotificationSettingsScreenState
                     const SizedBox(height: kSpacingTight),
                     if (!_enabled)
                       Text(
-                        "While this is off, due tasks won't pop up the "
-                        'reminder alarm on Home at all.',
+                        "While this is off, reminders won't ring or pop up at all.",
                         style: textTheme.labelSmall,
                       ),
                   ],

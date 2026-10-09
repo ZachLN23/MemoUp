@@ -59,7 +59,7 @@ class _SoundSettingsScreenState extends State<SoundSettingsScreen> {
       ),
     );
     if (choice != null) {
-      setState(() => widget.appData.defaultSnooze = choice);
+      setState(() => widget.appData.setDefaultSnooze(choice));
     }
   }
 

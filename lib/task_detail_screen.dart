@@ -87,6 +87,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
     final title = _titleController.text.trim();
     if (title.isEmpty) return; // Task Title is required — nothing to save.
     final task = Task(
+      id: widget.initialTask?.id ?? widget.appData.newTaskId(),
       title: title,
       date: _date,
       time: _time,

@@ -1,38 +1,42 @@
+import 'dart:async';
+
 import 'package:device_preview/device_preview.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 
 import 'app_data.dart';
 import 'home_screen.dart';
+import 'notification_service.dart';
 import 'theme.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Load saved tasks/settings before the first frame, so Home never
+  // flashes empty and the alarm check sees real data.
+  final appData = await AppData.load();
+  NotificationService.liveData = appData;
+  await NotificationService.init();
+  // Make sure the phone's scheduled alarms match what was saved.
+  unawaited(NotificationService.syncAll(appData));
+
   runApp(
-    // DevicePreview draws a phone frame around the app, so it's judged at the
-    // size it was designed for instead of stretched across a laptop window.
-    //
-    // Left ON in the deployed build on purpose: a live link is opened on a
-    // desktop browser, and a phone layout at full desktop width looks broken
-    // when it's not. The toolbar also lets a visitor switch device and
-    // orientation.
+    // DevicePreview draws a phone frame around the app. It's only needed
+    // on the web, where the live link is opened on a desktop browser and
+    // a phone layout at full width looks broken. On a real phone it is
+    // switched off so the app fills the screen.
     DevicePreview(
-      enabled: true,
-      builder: (context) => const MyApp(),
+      enabled: kIsWeb,
+      builder: (context) => MyApp(appData: appData),
     ),
   );
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key, required this.appData});
 
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  // Created once here, not in build() — build() can re-run (e.g. when
-  // DevicePreview switches device), and a field initializer only runs
-  // once per State object, so the task list survives that.
-  final AppData _appData = AppData();
+  /// Created once in main() and shared by every screen.
+  final AppData appData;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +53,7 @@ class _MyAppState extends State<MyApp> {
       // TextTheme built from the worksheet palette, not a seed color.
       theme: appTheme,
 
-      home: HomeScreen(appData: _appData),
+      home: HomeScreen(appData: appData),
     );
   }
 }

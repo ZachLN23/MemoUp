@@ -6,6 +6,7 @@ import 'package:flutter/services.dart' show HapticFeedback;
 import 'app_data.dart';
 import 'completed_screen.dart';
 import 'constants/spacing.dart';
+import 'notification_service.dart';
 import 'sound_settings_screen.dart';
 import 'task.dart';
 import 'task_detail_screen.dart';
@@ -14,12 +15,7 @@ import 'widgets/bottom_nav_bar.dart';
 import 'widgets/primary_button.dart';
 import 'widgets/task_card.dart';
 
-/// The Home screen: "Today's Reminders" and "Upcoming" task lists,
-/// a full-width "+" button to add a task, and the bottom nav bar.
-///
-/// Reads and writes [appData] directly rather than holding its own
-/// list — Task Detail and Completed do the same, so all three stay
-/// in sync without any state-management package.
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key, required this.appData});
 
@@ -29,46 +25,92 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  Timer? _alarmTimer;
+class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
+  Timer? _dueTimer;
   bool _showingAlarm = false;
 
   @override
   void initState() {
     super.initState();
-    // Check once as soon as Home is visible, then keep checking while
-    // it's open — this is what stands in for a real OS-level alarm.
-    // Nothing fires while the app is closed; see the note in
-    // _checkForDueTask below.
-    WidgetsBinding.instance.addPostFrameCallback((_) => _checkForDueTask());
-    _alarmTimer = Timer.periodic(
-      const Duration(seconds: 30),
-      (_) => _checkForDueTask(),
-    );
+    WidgetsBinding.instance.addObserver(this);
+    NotificationService.onChangedExternally = _reloadAndCheck;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      NotificationService.requestPermissions();
+      _refresh();
+    });
   }
 
   @override
   void dispose() {
-    _alarmTimer?.cancel();
+    WidgetsBinding.instance.removeObserver(this);
+    NotificationService.onChangedExternally = null;
+    _dueTimer?.cancel();
     super.dispose();
+  }
+
+  /// Coming back to the app (e.g. after tapping a reminder, or after the
+  /// notification's Snooze/Done buttons changed the saved data): re-read
+  /// the data and pop the alarm for anything that came due meanwhile.
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) _reloadAndCheck();
+  }
+
+  Future<void> _reloadAndCheck() async {
+    if (_showingAlarm) return;
+    await widget.appData.reload();
+    if (!mounted) return;
+    _refresh();
+  }
+
+  /// Re-render, re-arm the timer, and pop the alarm if something is due.
+  void _refresh() {
+    setState(() {});
+    _armTimer();
+    _checkForDueTask();
+  }
+
+  /// The soonest due time that is still in the future, if any.
+  DateTime? _nextDueTime() {
+    final now = DateTime.now();
+    DateTime? best;
+    for (final task in widget.appData.tasks) {
+      final due = task.dueAt;
+      if (due == null || !due.isAfter(now)) continue;
+      if (best == null || due.isBefore(best)) best = due;
+    }
+    return best;
+  }
+
+  /// Sleeps until the next task is due, then checks — no polling, so the
+  /// popup appears the moment a reminder's time arrives. (Capped at an
+  /// hour and re-armed, so a very distant task can't overflow a timer.)
+  void _armTimer() {
+    _dueTimer?.cancel();
+    if (!widget.appData.notificationsEnabled) return;
+    final next = _nextDueTime();
+    if (next == null) return;
+    var wait = next.difference(DateTime.now());
+    if (wait > const Duration(hours: 1)) wait = const Duration(hours: 1);
+    _dueTimer = Timer(wait + const Duration(milliseconds: 250), () {
+      _checkForDueTask();
+      _armTimer();
+    });
   }
 
   /// Looks for the first task whose date+time has already arrived and
   /// pops the Alarm Popup for it.
   ///
-  /// This only runs while Home is on screen and the app is in the
-  /// foreground — it is not a real OS notification/alarm (that needs a
-  /// package like flutter_local_notifications plus Android/iOS
-  /// permission setup, which this project doesn't have yet). Treat this
-  /// as the in-app stand-in for that, not the real thing.
+  /// This is the in-app half of a reminder. The other half is the real
+  /// system notification scheduled by NotificationService, which is what
+  /// rings when the app is closed; tapping it opens the app, and this
+  /// check then shows the popup.
   void _checkForDueTask() {
     if (_showingAlarm || !widget.appData.notificationsEnabled) return;
     final now = DateTime.now();
     for (final task in widget.appData.tasks) {
-      final date = task.date;
-      final time = task.time;
-      if (date == null || time == null) continue;
-      final due = DateTime(date.year, date.month, date.day, time.hour, time.minute);
+      final due = task.dueAt;
+      if (due == null) continue;
       if (!due.isAfter(now)) {
         _showAlarm(task);
         return; // one at a time — the next check picks up any others.
@@ -92,11 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
           title: task.title,
           subtitle: task.time!.format(dialogContext),
           onSnooze: () {
-            setState(() {
-              final snoozed = DateTime.now().add(widget.appData.defaultSnooze);
-              task.date = snoozed;
-              task.time = TimeOfDay.fromDateTime(snoozed);
-            });
+            setState(() => widget.appData.snoozeTask(task));
             Navigator.of(dialogContext).pop();
           },
           onDone: () {
@@ -108,6 +146,9 @@ class _HomeScreenState extends State<HomeScreen> {
     );
 
     _showingAlarm = false;
+    if (!mounted) return;
+    _armTimer();
+    _checkForDueTask(); // chain straight into any other overdue task
   }
 
   Future<void> _openTaskDetail({Task? task}) async {
@@ -119,7 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
-    setState(() {}); // appData was mutated in place — just re-render.
+    if (mounted) _refresh(); // appData was mutated in place — re-render + re-arm.
   }
 
   Future<void> _openCompleted() async {
@@ -128,7 +169,7 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (_) => CompletedScreen(appData: widget.appData),
       ),
     );
-    setState(() {});
+    if (mounted) _refresh();
   }
 
   Future<void> _openSoundSettings() async {
@@ -137,7 +178,7 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (_) => SoundSettingsScreen(appData: widget.appData),
       ),
     );
-    setState(() {});
+    if (mounted) _refresh();
   }
 
   void _handleNavTap(int index) {
