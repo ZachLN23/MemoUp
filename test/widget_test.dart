@@ -6,14 +6,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:final_project/main.dart';
+import 'package:memo_up/app_data.dart';
+import 'package:memo_up/main.dart';
 
 void main() {
   testWidgets('home screen shows its title and counts taps', (tester) async {
     // Build the app. Note we build MyApp directly, not the DevicePreview
     // wrapper, because a test does not need the phone frame.
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(MyApp(appData: AppData.memory()));
 
     expect(find.text('It works'), findsOneWidget);
     expect(find.text('Taps: 0'), findsOneWidget);

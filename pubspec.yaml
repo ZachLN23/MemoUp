@@ -1,11 +1,11 @@
 # Every Flutter project has one of these. It names your app, sets the Dart
 # version it needs, and lists the packages you depend on.
 # Add a package with: flutter pub add <name>
-name: final_project
+name: memo_up
 description: My 6ADET final project.
 publish_to: "none"
 version: 1.0.0+1
-
+  
 environment:
   sdk: ^3.8.0
 
@@ -25,6 +25,16 @@ dependencies:
   #   accidentally removed (a bug, fixed in 10.3.10) — an unpinned lower bound
   #   can still resolve to that broken patch.
   file_picker: ">=10.3.10 <12.0.0"
+  # Saves tasks, completed history and settings on the device, so nothing
+  # is lost when the app closes. (On web it uses the browser's storage.)
+  shared_preferences: ^2.3.0
+  # Real system notifications: schedules each reminder with the OS so it
+  # rings even when MemoUp is closed. Capped below 20.0.0, which changed
+  # the API from positional to named arguments.
+  flutter_local_notifications: ">=19.4.0 <20.0.0"
+  # Used directly (an absolute UTC instant is what gets scheduled); it is
+  # already pulled in by flutter_local_notifications.
+  timezone: ^0.10.0
 
 dev_dependencies:
   flutter_test:
